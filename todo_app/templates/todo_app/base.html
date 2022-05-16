@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-do lists</title>
+</head>
+<body>
+    <div>
+        <h1><a href="{% url 'index' %}">To-do lists</a></h1>
+    </div>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
