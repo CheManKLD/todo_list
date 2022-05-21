@@ -1,0 +1,26 @@
+{% extends 'todo_app\base.html' %}
+{% block content %}
+
+<div>
+    <div>
+        <h3>Edit list:</h3>
+        <h4>{{ todo_list.title | upper }}</h4>
+    </div>
+    <div>
+        <ul>
+            {% for todo_item in object_list %}
+            <li>
+                {{ todo_item.title }}
+                (Due {{ todo_item.due_date | date:"1, F j" }})
+            </li>
+            {% empty %}
+            <p>There are no to-do items in this list.</p>
+            {% endfor %}
+        </ul>
+        <p>
+            <input type="button" value="Add a new item">
+        </p>
+    </div>
+</div>
+
+{% endblock %}

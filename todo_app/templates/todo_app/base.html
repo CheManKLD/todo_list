@@ -6,7 +6,11 @@
 </head>
 <body>
     <div>
+        {% if list_selected == 0 %}
+        <h1>To-do lists</h1>
+        {% else %}
         <h1><a href="{% url 'index' %}">To-do lists</a></h1>
+        {% endif %}
     </div>
     <div>
         {% block content %}
