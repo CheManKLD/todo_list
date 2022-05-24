@@ -1,4 +1,9 @@
 {% extends 'todo_app\base.html' %}
+
+{% block title %}
+{{ todo_list.title | capfirst }}
+{% endblock %}
+
 {% block content %}
 
 <div>
