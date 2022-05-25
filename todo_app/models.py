@@ -14,7 +14,7 @@ class ToDoList(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('list', kwargs={'list_id': self.pk})
+        return reverse('list', args=[self.id])
 
     class Meta:
         ordering = ['id']
@@ -29,6 +29,9 @@ class ToDoItem(models.Model):
 
     def __str__(self):
         return f'{self.title}: due {self.due_date}'
+
+    def get_absolute_url(self):
+        return reverse('list', args=[self.todo_list.id])
 
     class Meta:
         ordering = ['due_date']

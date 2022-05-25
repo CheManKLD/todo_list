@@ -15,16 +15,24 @@
         <ul>
             {% for todo_item in object_list %}
             <li>
-                {{ todo_item.title }}
-                (Due {{ todo_item.due_date | date:"1, F j" }})
+                <details>
+                    <summary>
+                        {{ todo_item.title }}
+                        (Due {{ todo_item.due_date | date:"1, F j" }})
+                    </summary>
+                    <p>{{ todo_item.description }}</p>
+                </details>
+                <button>
+                    <a href="{% url 'item-update' todo_list.id todo_item.id %}">Update the item</a>
+                </button>
             </li>
             {% empty %}
             <p>There are no to-do items in this list.</p>
             {% endfor %}
         </ul>
-        <p>
-            <input type="button" value="Add a new item">
-        </p>
+        <button>
+            <a href="{% url 'item-add' todo_list.id %}">Add a new item</a>
+        </button>
     </div>
 </div>
 
