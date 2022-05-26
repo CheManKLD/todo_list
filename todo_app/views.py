@@ -1,7 +1,8 @@
-from django.views.generic import ListView, CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from .forms import *
-from .models import *
+from .forms import AddToDoListForm, AddToDoItemForm
+from .models import ToDoList, ToDoItem
 
 
 class ToDoListView(ListView):
@@ -26,7 +27,14 @@ class ToDoItemView(ListView):
 class ToDoListCreate(CreateView):
     form_class = AddToDoListForm
     template_name = 'todo_app/todo_list_form.html'
-    extra_context = {'title': 'Add a new list'}
+    extra_context = {'template_title': 'Add a new list'}
+
+
+class ToDoListDelete(DeleteView):
+    model = ToDoList
+    template_name = 'todo_app/todo_list_confirm_delete.html'
+    extra_context = {'template_title': 'Delete list'}
+    success_url = reverse_lazy('index')
 
 
 class ToDoItemCreate(CreateView):
@@ -34,13 +42,13 @@ class ToDoItemCreate(CreateView):
     template_name = 'todo_app/todo_item_form.html'
 
     def get_initial(self):
-        initial_data = super(ToDoItemCreate, self).get_initial()
+        initial_data = super().get_initial()
         todo_list = ToDoList.objects.get(id=self.kwargs['list_id'])
         initial_data['todo-list'] = todo_list
         return initial_data
 
     def get_context_data(self, **kwargs):
-        context = super(ToDoItemCreate, self).get_context_data()
+        context = super().get_context_data()
         todo_list = ToDoList.objects.get(id=self.kwargs['list_id'])
         context['todo_list'] = todo_list
         context['title'] = 'Create a new item'
@@ -53,7 +61,21 @@ class ToDoItemUpdate(UpdateView):
     template_name = 'todo_app/todo_item_form.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ToDoItemUpdate, self).get_context_data()
+        context = super().get_context_data()
         context['todo_list'] = self.object.todo_list
         context['title'] = 'Edit item'
+        return context
+
+
+class ToDoItemDelete(DeleteView):
+    model = ToDoItem
+    template_name = 'todo_app/todo_item_confirm_delete.html'
+    extra_context = {'template_title': 'Delete item'}
+
+    def get_success_url(self):
+        return reverse_lazy('list', args=[self.kwargs['list_id']])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['todo_list'] = self.object.todo_list
         return context

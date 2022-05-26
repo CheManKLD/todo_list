@@ -7,13 +7,12 @@
 {% block content %}
 
 <h3>{{ template_title }}</h3>
+<p>Are you sure you want to delete the list <i>{{ object.title }}</i>?</p>
 <div>
     <form method="post">
         {% csrf_token %}
 
-        {{ form.as_p }}
-
-        <button type="submit">Save</button>
+        <button type="submit">Yes, delete</button>
     </form>
     <button>
         <a href="{% url 'index' %}">Cancel</a>

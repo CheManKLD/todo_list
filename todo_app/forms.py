@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from todo_app.models import ToDoList, ToDoItem
 
 
 class AddToDoListForm(forms.ModelForm):

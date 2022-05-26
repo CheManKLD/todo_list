@@ -18,13 +18,17 @@
                 <details>
                     <summary>
                         {{ todo_item.title }}
-                        (Due {{ todo_item.due_date | date:"1, F j" }})
+                        (Due {{ todo_item.due_date | date:"d M Y" }})
                     </summary>
                     <p>{{ todo_item.description }}</p>
                 </details>
                 <button>
                     <a href="{% url 'item-update' todo_list.id todo_item.id %}">Update the item</a>
                 </button>
+                <button>
+                    <a href="{% url 'item-delete' todo_list.id todo_item.id %}">Delete the item</a>
+                </button>
+                <p></p>
             </li>
             {% empty %}
             <p>There are no to-do items in this list.</p>
@@ -32,6 +36,9 @@
         </ul>
         <button>
             <a href="{% url 'item-add' todo_list.id %}">Add a new item</a>
+        </button>
+        <button>
+            <a href="{% url 'list-delete' todo_list.id %}">Delete this list</a>
         </button>
     </div>
 </div>
